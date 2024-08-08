@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # Python 3.12.4
 from typing import List, Dict, Any
 import requests
