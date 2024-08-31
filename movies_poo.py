@@ -24,7 +24,7 @@ class Movies:
     @staticmethod
     def request_movies() -> List[Dict[str, Any]] | None:
         all_movies = []
-        max_pages = 1
+        max_pages = 20
         page = 1
         url = "https://jsonmock.hackerrank.com/api/tvseries"
 
