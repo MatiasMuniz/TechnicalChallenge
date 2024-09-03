@@ -2,6 +2,7 @@ import requests
 import collections
 from functools import reduce
 from typing import List, Dict, Any
+import json
 
 # Define a namedtuple called 'Movie' with fields 'name', 'imdb_rating', and 'genre'.
 Movie = collections.namedtuple('Movie', ['name', 'imdb_rating', 'genre'])
@@ -16,6 +17,9 @@ class Movies:
     Methods:
         request_movies() -> List[Dict[str, Any]]:
             Static method that fetches movie data from the paginated API.
+
+        get_best_movie(genre: str) -> Movie | str
+        Method that reduces the list of filtered movies to return the best rated of a genre.
     """
 
     def __init__(self):
@@ -42,9 +46,11 @@ class Movies:
 
         return all_movies
 
-    def get_filter_movies(self, genre: str) -> List[Movie]:
+    def get_filter_movies(self, genre: str) -> List[Movie] | str:
         filtered_movies = [movie for movie in self._movies if genre in movie.genre]
-        return filtered_movies or "No TV series found for the given genre."
+        if not filtered_movies:
+            raise Exception("No TV series found for the given genre.")
+        return filtered_movies
 
     def get_best_movie(self, genre: str) -> Movie | str:
         filtered_movies = self.get_filter_movies(genre)
@@ -55,7 +61,7 @@ def main() -> Movie | None:
     movies = Movies()
     best_movie = movies.get_best_movie("Action")
 
-    print(best_movie)
+    return best_movie
 
 if __name__ == '__main__':
-    main()
+    print(main())
